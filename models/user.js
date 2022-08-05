@@ -1,9 +1,19 @@
 const mongoose = require('mongoose');
+//const multer = require('multer');
+//const upload = multer({dest: '/uploads/'});
 
 const userSchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
     username: { type: String, required: true, minLength: 4, maxLength: 12, unique: true },
     password: { type: String, required: true, minLength: 4 },
+    fullname: { type: String },
+    email: { type: String }, 
+    phone: { type: String },
+    media: {
+        facebook: { type: String },
+        twitter: { type: String },
+        instagram: { type: String },
+    },
     isApproved: { type: Boolean, default: false },
     isBanned: { type: Boolean, default: false },
     badges: {
@@ -17,7 +27,6 @@ const userSchema = mongoose.Schema({
     },
     level: { type: Number, default: 1, min: 1, max: 5 }, // 1 .. 5
     createdAt: { type: Number },
-    comments: [{ haberBaslik: String, haberUrl: String, body: String }],
     followers: [{ userId: String, username: String }],
     geometry: {
         lat: { type: String },

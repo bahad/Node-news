@@ -20,6 +20,10 @@ router.get('/getUser', (req, res, next) => {
                         return {
                             id: doc._id,
                             username: doc.username,
+                            fullname: doc.fullname,
+                            email: doc.email,
+                            phone: doc.phone,
+                            media: doc.media,
                             isApproved: doc.isApproved,
                             isBanned: doc.isBanned,
                             badges: doc.badges,
@@ -67,6 +71,10 @@ router.post('/signup', (req, res, next) => {
                             _id: new mongoose.Types.ObjectId,
                             username: req.body.username,
                             password: hash,
+                            fullname: req.body.fullname,
+                            email: req.body.email,
+                            phone: req.body.phone,
+                            media: req.body.media,
                             isApproved: req.body.isApproved,
                             isBanned: req.body.isBanned,
                             badges: req.body.badges,
@@ -154,11 +162,16 @@ router.post('/login', (req, res, next) => {
                         "message": "You have logged in successfully",
                         "token": token,
                         "user": {
+                            "userId": user[0]._id,
                             "username": user[0].username,
                             "password": user[0].password,
+                            "fullname": user[0].fullname,
+                            "email": user[0].email,
+                            "phone": user[0].phone,
+                            "media": user[0].media,
                             "isBanned": user[0].isBanned,
                             "isApproved": user[0].isApproved,
-                            "level":user[0].level,
+                            "level": user[0].level,
                             "badges": user[0].badges,
                             "createdAt": user[0].createdAt,
                             "comments": user[0].comments,
@@ -178,6 +191,62 @@ router.post('/login', (req, res, next) => {
                 error: err
             })
         })
+});
+
+//GET BY ID
+router.get('/:userId', (req, res, next) => {
+    const id = req.params.userId;
+    User.findById(id)
+        //.select('_ id name star discountedPrice singlePrice doublePrice triblePrice fourPrice currency hotelImage country province adress website tel services photos comments meta')
+        .exec()
+        .then(doc => {
+            if (doc) {
+                const response = {
+                    id: doc._id,
+                    username: doc.username,
+                    fullname: doc.fullname,
+                    email: doc.email,
+                    phone: doc.phone,
+                    media: doc.media,
+                    isApproved: doc.isApproved,
+                    isBanned: doc.isBanned,
+                    badges: doc.badges,
+                    level: doc.level,
+                    createdAt: doc.createdAt,
+                    comments: doc.comments,
+                    followers: doc.followers,
+                    geometry: doc.geometry,
+                }
+                res.status(200).json({ "user": response });
+            }
+            else {
+                res.status(404).json({ "message": "User not found" })
+            }
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({ error: err });
+        });
+});
+
+//UPDATE
+
+router.put('/:userID', (req, res, next) => {
+    //const param = req.params.userID;
+    User.findByIdAndUpdate(req.params.userID, req.body, { new: true })
+        .then(result => {
+            console.log(result);
+            res.status(200).json({
+                message: 'User Updated'
+            });
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                error: err
+            })
+        });
+
 });
 
 

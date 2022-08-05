@@ -103,7 +103,7 @@ function getHaber() {
                 }
                 const $element = $(element);
                 const $image = $element.find("div.hblnImage img").attr('data-src')
-                const $title = $element.find("span.hblnTitle").text().trim().split('"').join('').substring(5);
+                const $title = $element.find("span.hblnContent").text().trim().split('"').join('')
                 const $time = $element.find("div.hblnTime").text().trim();
                 const $subtitle = $element.find('div.hblnContent p').text().trim().split('"').join('');
                 const $href = $element.find("a").attr('href');
@@ -140,7 +140,7 @@ function getHaberEkonomi() {
                 }
                 const $element = $(element);
                 const $image = $element.find("div.hblnImage img").attr('data-src')
-                const $title = $element.find("span.hblnTitle").text().split('"').join("").trim().split('"').join('').substring(5);
+                const $title = $element.find("span.hblnContent").text().split('"').join("").trim().split('"').join('').substring(5);
                 const $subtitle = $element.find('div.hblnContent p').text().split('"').join("").trim().split('"').join('');
                 const $time = $element.find("div.hblnTime").text().trim();
                 const $href = $element.find("a").attr('href');
@@ -177,7 +177,7 @@ function getHaberDunya() {
                 }
                 const $element = $(element);
                 const $image = $element.find("div.hblnImage img").attr('data-src')
-                const $title = $element.find("span.hblnTitle").text().split('"').join("").trim().split('"').join('').substring(5);
+                const $title = $element.find("span.hblnContent").text().split('"').join("").trim().split('"').join('').substring(5);
                 const $subtitle = $element.find('div.hblnContent p').text().split('"').join("").trim().split('"').join('');
                 const $time = $element.find("div.hblnTime").text().trim();
                 const $href = $element.find("a").attr('href');
